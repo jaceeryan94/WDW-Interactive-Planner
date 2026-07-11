@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
     // planner-source/ sits OUTSIDE /public, so Vercel never serves it as a
     // static file -- the only way to get the HTML is through this function,
     // after a verified paid session.
-    const filePath = path.join(process.cwd(), 'planner-source', 'WDW_Interactive_Planner.html');
+    const filePath = path.join(__dirname, '..', 'planner-source', 'WDW_Interactive_Planner.html');
     const file = fs.readFileSync(filePath, 'utf8');
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
