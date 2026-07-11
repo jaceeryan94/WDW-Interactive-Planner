@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WDW Interactive Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#efe7db;
+    --card:#ffffff;
+    --pink:#cf8a9c;
+    --pink-light:#f8dde3;
+    --maroon:#7d3446;
+    --maroon2:#8a3b4b;
+    --text:#4a3f3d;
+    --muted:#9c8f8a;
+    --muted2:#a6968f;
+    --green:#5c7a63;
+    --green-bg:#e9f0ea;
+    --gold:#f3e0c9;
+    --gold-text:#8a5a2b;
+    --border:#f3e6e2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Poppins',sans-serif;
+    color:var(--text);
+    background-color:var(--cream);
+    background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNjAiIGhlaWdodD0iMjYwIiB2aWV3Qm94PSIwIDAgMjYwIDI2MCI+CjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2UzYTliOCIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjU1Ij4KPHBhdGggZD0iTTQwIDE1IEw0NSAyOCBMNTkgMjggTDQ4IDM3IEw1MiA1MSBMNDAgNDMgTDI4IDUxIEwzMiAzNyBMMjEgMjggTDM1IDI4IFoiLz4KPC9nPgo8ZyBmaWxsPSIjZTliY2M3IiBvcGFjaXR5PSIwLjUiPgo8cGF0aCBkPSJNMjA1IDQwIEwyMDggNDcgTDIxNiA0NyBMMjEwIDUyIEwyMTIgNjAgTDIwNSA1NSBMMTk4IDYwIEwyMDAgNTIgTDE5NCA0NyBMMjAyIDQ3IFoiLz4KPC9nPgo8ZyBmaWxsPSJub25lIiBzdHJva2U9IiNlZWMyY2QiIHN0cm9rZS13aWR0aD0iMS42IiBvcGFjaXR5PSIwLjUiPgo8Y2lyY2xlIGN4PSIxMjAiIGN5PSIxMjAiIHI9IjQiLz4KPC9nPgo8ZyBmaWxsPSIjZWFiZmM5IiBvcGFjaXR5PSIwLjQ1Ij4KPGNpcmNsZSBjeD0iMjMwIiBjeT0iMTUwIiByPSIxMyIvPgo8Y2lyY2xlIGN4PSIyMTkiIGN5PSIxMzkiIHI9IjciLz4KPGNpcmNsZSBjeD0iMjQxIiBjeT0iMTM5IiByPSI3Ii8+CjwvZz4KPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTZhZmJjIiBzdHJva2Utd2lkdGg9IjEuOCIgb3BhY2l0eT0iMC41Ij4KPHBhdGggZD0iTTYwIDE5MCBMNjQgMjAwIEw3NCAyMDAgTDY2IDIwNiBMNjkgMjE2IEw2MCAyMTAgTDUxIDIxNiBMNTQgMjA2IEw0NiAyMDAgTDU2IDIwMCBaIi8+CjwvZz4KPGcgZmlsbD0iI2YwYzlkMiIgb3BhY2l0eT0iMC40Ij4KPGNpcmNsZSBjeD0iMTUwIiBjeT0iMjE1IiByPSIzIi8+CjwvZz4KPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWVjMmNkIiBzdHJva2Utd2lkdGg9IjEuNiIgb3BhY2l0eT0iMC40Ij4KPHBhdGggZD0iTTE3MCA2MCBMMTczIDY4IEwxODEgNjggTDE3NSA3MyBMMTc3IDgxIEwxNzAgNzYgTDE2MyA4MSBMMTY1IDczIEwxNTkgNjggTDE2NyA2OCBaIi8+CjwvZz4KPGcgZmlsbD0iI2VlYzJjZCIgb3BhY2l0eT0iMC4zNSI+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMjMwIiByPSIxMCIvPgo8Y2lyY2xlIGN4PSIxMiIgY3k9IjIyMiIgcj0iNS41Ii8+CjxjaXJjbGUgY3g9IjI4IiBjeT0iMjIyIiByPSI1LjUiLz4KPC9nPgo8L3N2Zz4=");
+    background-repeat:repeat;
+    background-size:260px 260px;
+    min-height:100vh;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:26px 22px 60px 22px;}
+  .page-card{
+    background:var(--card);
+    border-radius:22px;
+    padding:26px 32px 30px 32px;
+    box-shadow:0 10px 30px rgba(120,70,80,0.10);
+  }
+  .header{text-align:center;margin-bottom:14px;}
+  .badge{
+    display:inline-block;background:var(--pink);color:#fff;font-size:11px;font-weight:700;
+    letter-spacing:1.5px;padding:5px 15px;border-radius:999px;margin-bottom:10px;
+  }
+  h1{font-size:30px;font-weight:800;color:var(--maroon);margin:0 0 6px 0;}
+  .subtitle{font-size:13px;color:var(--muted);margin:0 0 4px 0;font-weight:500;}
+  .byline{font-size:10.5px;color:var(--muted2);font-style:italic;margin-top:8px;}
+
+  .tabs{
+    display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 22px 0;
+  }
+  .tab-btn{
+    background:var(--pink-light);color:var(--maroon2);border:none;border-radius:999px;
+    padding:9px 18px;font-family:'Poppins',sans-serif;font-size:12.5px;font-weight:600;
+    cursor:pointer;transition:all .15s ease;
+  }
+  .tab-btn:hover{background:#f2c8d3;}
+  .tab-btn.active{background:var(--maroon);color:#fff;}
+
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  .stat-bar{
+    display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:18px;
+  }
+  .stat{
+    background:var(--pink-light);border-radius:14px;padding:8px 16px;text-align:center;min-width:120px;
+  }
+  .stat .num{font-size:18px;font-weight:800;color:var(--maroon);display:block;}
+  .stat .lbl{font-size:9.5px;color:var(--maroon2);text-transform:uppercase;letter-spacing:.4px;font-weight:600;}
+
+  .card{
+    background:#fffdfb;border:1px solid var(--border);border-radius:16px;
+    padding:16px 18px 12px 18px;margin-bottom:14px;
+  }
+  .card-title{font-size:14px;font-weight:700;color:var(--maroon2);margin:0 0 10px 2px;}
+  .card-note{font-size:10.5px;color:var(--muted2);line-height:1.5;margin:8px 2px 0 2px;}
+
+  .item-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;}
+  .item{
+    display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--border);
+    border-radius:12px;padding:10px 12px;transition:background .15s ease, opacity .15s ease;
+  }
+  .item.checked{background:var(--green-bg);}
+  .item input[type=checkbox]{
+    margin-top:3px;width:16px;height:16px;accent-color:var(--maroon);flex-shrink:0;cursor:pointer;
+  }
+  .item-body{flex:1;min-width:0;}
+  .item-name{font-weight:700;font-size:12.5px;color:var(--text);}
+  .item.checked .item-name{color:var(--green);text-decoration:line-through;text-decoration-color:var(--green);}
+  .item-sub{font-size:10px;color:var(--muted2);font-style:italic;margin-top:1px;}
+  .item-loc{font-size:10.5px;color:var(--text);margin-top:3px;}
+  .item-loc .area{color:var(--muted2);font-size:9.5px;display:block;}
+  .item-meta{font-size:10px;color:var(--muted2);margin-top:3px;}
+  .tag{
+    display:inline-block;font-size:8.5px;font-weight:700;padding:2px 8px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:.3px;margin-top:5px;
+  }
+  .tag.standby{background:var(--green-bg);color:var(--green);}
+  .tag.special{background:var(--pink-light);color:var(--maroon2);}
+  .price{font-weight:700;color:var(--green);font-size:11px;margin-top:4px;}
+
+  .ll-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:760px){.ll-grid{grid-template-columns:1fr;}}
+  .ll-park-title{font-size:15px;font-weight:800;color:var(--maroon);margin:0 0 8px 0;padding-bottom:7px;border-bottom:2px solid var(--pink-light);display:flex;justify-content:space-between;align-items:center;}
+  .ll-park-title .reset-btn{font-size:9px;font-weight:600;color:var(--muted2);background:none;border:1px solid var(--border);border-radius:999px;padding:3px 9px;cursor:pointer;text-transform:none;letter-spacing:0;}
+  .ll-park-title .reset-btn:hover{color:var(--maroon2);border-color:var(--pink);}
+  .ll-group-label{font-size:10px;font-weight:700;color:var(--maroon2);text-transform:uppercase;letter-spacing:.3px;margin:10px 0 5px 0;display:flex;justify-content:space-between;}
+  .ll-group-label .count{color:var(--muted2);font-weight:600;text-transform:none;letter-spacing:0;}
+  .ll-chip-list{display:flex;flex-wrap:wrap;gap:6px;}
+  .ll-chip-label{
+    display:flex;align-items:center;gap:5px;background:var(--pink-light);color:var(--maroon2);
+    font-size:10px;font-weight:600;padding:5px 11px;border-radius:999px;cursor:pointer;
+    transition:opacity .15s ease, background .15s ease;
+  }
+  .ll-chip-label input{accent-color:var(--maroon2);cursor:pointer;width:12px;height:12px;}
+  .ll-chip-label.chosen{background:var(--maroon2);color:#fff;}
+  .ll-chip-label.chosen input{accent-color:#fff;}
+  .ll-chip-label.disabled{opacity:.35;cursor:not-allowed;}
+  .ll-chip-label.single{background:var(--gold);color:var(--gold-text);}
+  .ll-chip-label.single.chosen{background:var(--gold-text);color:#fff;}
+  .ll-summary{font-size:10px;color:var(--text);margin-top:10px;padding-top:8px;border-top:1px dashed var(--border);line-height:1.5;}
+  .ll-summary b{color:var(--maroon2);}
+  .ll-summary .empty{color:var(--muted2);font-style:italic;}
+
+  .summary-group{margin-bottom:16px;}
+  .summary-group h3{font-size:12.5px;color:var(--maroon2);margin:0 0 8px 2px;}
+  .summary-list{list-style:none;margin:0;padding:0;}
+  .summary-list li{font-size:11.5px;padding:5px 0;border-bottom:1px solid var(--border);color:var(--text);}
+  .summary-list li:last-child{border-bottom:none;}
+  .summary-empty{font-size:11px;color:var(--muted2);font-style:italic;padding:6px 2px;}
+
+  .top-actions{display:flex;justify-content:center;gap:10px;margin-top:4px;margin-bottom:2px;}
+  .action-btn{
+    background:#fff;border:1px solid var(--border);color:var(--maroon2);font-family:'Poppins',sans-serif;
+    font-size:10.5px;font-weight:600;padding:6px 14px;border-radius:999px;cursor:pointer;
+  }
+  .action-btn:hover{border-color:var(--pink);}
+  .action-btn.danger:hover{border-color:#c47;color:#c47;}
+
+  .footer{text-align:center;font-size:9px;color:var(--muted2);font-style:italic;margin-top:18px;line-height:1.6;}
+
+  @media print{
+    .tabs,.top-actions{display:none;}
+    .tab-panel{display:block !important;break-before:page;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="page-card">
+    <div class="header">
+      <span class="badge">WDW INTERACTIVE PLANNER</span>
+      <h1>Character &amp; Lightning Lane Planner</h1>
+      <p class="subtitle">Check off dining &amp; meet &amp; greets, and build your Lightning Lane picks for every park</p>
+      <p class="byline">Unofficial fan-made planning tool &middot; not affiliated with or endorsed by Disney &middot; your selections save automatically in this browser</p>
+    </div>
+
+    <div class="top-actions">
+      <button class="action-btn" onclick="window.print()">Print / save my plan</button>
+      <button class="action-btn danger" onclick="resetEverything()">Reset everything</button>
+    </div>
+
+    <div class="tabs" id="tabs"></div>
+
+    <div class="stat-bar" id="statBar"></div>
+
+    <div id="panels"></div>
+
+    <p class="footer">Character locations, hours, pricing &amp; Lightning Lane eligibility change frequently &mdash; always confirm same-day details in My Disney Experience before your visit.</p>
+  </div>
+</div>
+
+<script>
+/* ============================== DATA ============================== */
+const diningData = [
+  {name:"Chef Mickey's", sub:"Buffet", loc:"Disney's Contemporary Resort", area:"Concourse, Bay Lake view", chars:"Mickey, Minnie, Donald, Goofy, Pluto", food:"American", price:"Breakfast $35–$59.99 · Dinner $60+"},
+  {name:"Cinderella's Royal Table", sub:"Prix fixe, plated", loc:"Magic Kingdom", area:"Fantasyland — inside Cinderella Castle", chars:"Cinderella (host), plus rotating princesses (Ariel, Aurora, Belle, Jasmine, Snow White)", food:"American", price:"Breakfast, lunch & dinner $60+"},
+  {name:"The Crystal Palace", sub:"Buffet", loc:"Magic Kingdom", area:"Main Street, U.S.A.", chars:"Winnie the Pooh, Tigger, Piglet, Eeyore", food:"American", price:"Breakfast $35–$59.99 · Lunch/Dinner $60+"},
+  {name:"Hollywood & Vine", sub:"Buffet · Minnie's Seasonal Dine", loc:"Disney's Hollywood Studios", area:"Echo Lake", chars:"Minnie (host) with Mickey, Goofy & Pluto in seasonal outfits", food:"American", price:"Breakfast $35–$59.99 · Lunch/Dinner $60+"},
+  {name:"Akershus Royal Banquet Hall", sub:"Family-style", loc:"EPCOT", area:"World Showcase — Norway Pavilion", chars:"Rotating princesses — Cinderella, Belle, Snow White, Aurora, Ariel & Jasmine", food:"American & Norwegian", price:"Breakfast $35–$59.99 · Lunch/Dinner $60+"},
+  {name:"Garden Grill Restaurant", sub:"Family-style, rotating room", loc:"EPCOT", area:"World Nature — The Land Pavilion", chars:"Chip 'n' Dale, “Farmer” Mickey, Pluto", food:"American", price:"Breakfast $35–$59.99 · Lunch/Dinner $60+"},
+  {name:"Tusker House Restaurant", sub:"Buffet", loc:"Disney's Animal Kingdom", area:"Africa — Harambe", chars:"Donald (safari host) with Mickey & Goofy", food:"African & American", price:"Breakfast $35–$59.99 · Lunch/Dinner $60+"},
+  {name:"Topolino's Terrace", sub:"Prix fixe, rooftop · Breakfast only", loc:"Disney's Riviera Resort", area:"Rooftop", chars:"Mickey, Minnie, Donald & Daisy in artist-inspired attire", food:"French & Italian", price:"Breakfast $35–$59.99"},
+  {name:"Story Book Dining at Artist Point", sub:"Plated · Dinner only", loc:"Disney's Wilderness Lodge", area:"Artist Point", chars:"Snow White, Dopey & Grumpy, with the Evil Queen for photos", food:"American", price:"Dinner $60+"},
+  {name:"Cape May Café", sub:"Buffet · Breakfast only", loc:"Disney's Beach Club Resort", area:"Minnie's Beach Bash Breakfast", chars:"Minnie and friends in beach attire", food:"American & Seafood", price:"Breakfast $35–$59.99"},
+  {name:"'Ohana", sub:"Family-style · Breakfast only", loc:"Disney's Polynesian Village Resort", area:"Best Friends Breakfast", chars:"Lilo, Stitch, Mickey & Pluto", food:"American & Polynesian", price:"Breakfast $35–$59.99"},
+  {name:"1900 Park Fare", sub:"Buffet", loc:"Disney's Grand Floridian Resort & Spa", area:"Wish Makers Enchanted Dining", chars:"Aladdin (as Prince Ali), Cinderella, Mirabel, Tiana", food:"American", price:"Breakfast & dinner $60+"}
+];
+
+function mg(name, loc, area, times, ll, special){ return {name, loc, area, times, ll, special: !!special}; }
+
+const meetGreets = {
+  mk: [
+    mg("Mickey Mouse","Town Square Theater","Main Street, U.S.A.","Daily · 9:00 AM–10:30 PM","Standby only"),
+    mg("Cinderella + rotating princess","Princess Fairytale Hall","Fantasyland","Daily · 9:00 AM–9:00 PM","Standby only"),
+    mg("Tiana + rotating princess (often Rapunzel)","Princess Fairytale Hall","Fantasyland","Daily · 9:00 AM–9:00 PM","Standby only"),
+    mg("Ariel","Ariel's Grotto","Fantasyland","Daily · 10:00 AM–7:00 PM","Standby only"),
+    mg("Donald & Goofy (circus attire)","Pete's Silly Sideshow","Storybook Circus, Fantasyland","Daily · 10:00 AM–7:00 PM","Standby only"),
+    mg("Minnie & Daisy (circus attire)","Pete's Silly Sideshow","Storybook Circus, Fantasyland","Daily · 10:00 AM–7:00 PM","Standby only"),
+    mg("Jasmine & Aladdin","Agrabah Bazaar","Adventureland","~3 short windows/day — check app","Standby only"),
+    mg("Mirabel","Fairytale Garden","Fantasyland","~9 short windows, mornings–early afternoon","Standby only"),
+    mg("Winnie the Pooh & Tigger","The Thotful Spot","Hundred Acre Wood, Fantasyland","10:00 AM–1:40 PM & 3:40–4:40 PM","Standby only"),
+    mg("Peter Pan","Near Peter Pan's Flight","Fantasyland","~4 short windows/day","Standby only"),
+    mg("Belle","Enchanted Tales with Belle","Fantasyland","Daily · 10:30 AM–7:30 PM — interactive storytelling","Multi Pass eligible",true),
+    mg("Elena of Avalor (rotating)","Town Square Theater patio","Main Street, U.S.A.","Intermittent, ~9:00 AM–4:00 PM — confirm in app","Standby only"),
+    mg("Stitch","Near Space Ranger Spin exit","Tomorrowland","Roaming, occasional appearances","Standby / roaming",true),
+    mg("Woody & Jessie (stage revue, not a posed meet)","Diamond Horseshoe","Frontierland","Seasonal only — May 26–Sept 8","Show, not a queue",true)
+  ],
+  epcot: [
+    mg("Mickey, Minnie & Goofy","Mickey & Friends","CommuniCore Hall, World Celebration","Daily · 9:00 AM–9:00 PM","Standby only"),
+    mg("Anna & Elsa","Royal Sommerhus","Norway Pavilion, World Showcase","Daily · 9:15 AM–6:30 PM","Standby only"),
+    mg("Alice in Wonderland","Front garden","United Kingdom Pavilion","Daily, rotating times","Standby only"),
+    mg("Winnie the Pooh","Christopher Robin's Room","United Kingdom Pavilion","Daily, rotating times","Standby only"),
+    mg("Aurora","Gazebo","France Pavilion","Daily, rotating times","Standby only"),
+    mg("Belle","Near the water's edge","France Pavilion","Daily, rotating times","Standby only"),
+    mg("Snow White","Near the wishing well","Germany Pavilion","Daily, rotating times","Standby only"),
+    mg("Mulan","Gardens / temple entrance","China Pavilion","Daily, late morning–afternoon","Standby only"),
+    mg("Jasmine","Lamps of Wonder area","Morocco Pavilion","Daily, intermittent","Standby only"),
+    mg("Donald Duck","Past the pyramid","Mexico Pavilion","Daily, rotating times","Standby only"),
+    mg("Daisy Duck","Near Spaceship Earth","Main entrance, World Celebration","Daily, rotating — location shifts seasonally","Standby only"),
+    mg("Moana","Beside Journey of Water","World Nature","Daily, rotating — lines cut off early","Standby only"),
+    mg("Figment","ImageWorks","Imagination Pavilion, World Celebration","9:00 AM–12:30 PM & 1:45–3:45 PM","Standby only"),
+    mg("Asha (Wish)","Friendship Ambassador Gazebo","World Showcase entry","Daily, rotating times","Standby only"),
+    mg("Star-Lord","Near Cosmic Rewind","World Discovery","Daily, rotating times","Standby only"),
+    mg("Pluto","Near Spaceship Earth","Main entrance","Flagged “temporarily unavailable” — check app","Standby (when active)",true)
+  ],
+  hs: [
+    mg("Mickey & Minnie (Sorcerer attire)","Red Carpet Dreams","Commissary Lane","Daily · 9:00 AM–8:00 PM","Standby only"),
+    mg("Darth Vader","Near Star Tours","Echo Lake","Daily, ~every 20 min, 9:00 AM–4:20 PM","Standby only"),
+    mg("Olaf","Celebrity Spotlight","Echo Lake","Daily · 9:00 AM–6:00 PM","Standby only"),
+    mg("Stitch","Celebrity Spotlight","Echo Lake","9:00 AM–12:00 PM — Disney Visa cardmembers only","Cardmembers only",true),
+    mg("Ariel","Walt Disney Presents","Animation Courtyard","Daily · 9:00 AM–4:00 PM","Standby only"),
+    mg("Edna Mode","Super-Suit Gallery","Pixar Plaza","Daily, in blocks · 9:00 AM–4:30 PM","Standby only"),
+    mg("Joy (Inside Out)","Pixar Plaza","","Daily, ~every 30 min, 9:00 AM–4:00 PM","Standby only"),
+    mg("Mr. & Mrs. Incredible, Frozone, Sulley","Pixar Plaza","","Daily","Standby only"),
+    mg("Woody, Jessie & Buzz Lightyear","Meet the Toys","Toy Story Land","Daily","Standby only"),
+    mg("Chewbacca","Near the Millennium Falcon","Star Wars: Galaxy's Edge","Roaming, irregular — no posted times","Roaming, no queue",true),
+    mg("First Order patrol (Kylo Ren + Stormtroopers)","Star Wars: Galaxy's Edge","","Daily roaming, ~8 windows","Roaming, no queue",true),
+    mg("Green Army Drum Corps","Toy Story Land","","Daily roaming performance, scheduled times","Roaming, no queue",true)
+  ],
+  ak: [
+    mg("Mickey & Minnie (safari attire)","Adventurers Outpost","Discovery Island","Daily · ~8:00 AM–6:00 PM","Standby only"),
+    mg("Judy Hopps & Nick Wilde","Zoogether Day Gathering Spot","Discovery Island","Daily · ~8:00 AM–3:00/4:00 PM","Standby only"),
+    mg("Moana","Character Landing","Discovery Island","Daily","Standby only"),
+    mg("Russell & Dug","Discovery Island Trails","near Tree of Life","Daily, intermittent — weather dependent","Standby only"),
+    mg("Kevin (giant bird)","Discovery Island pathway","","Informal roaming — mid-morning/early afternoon","No line, casual photos",true),
+    mg("Pocahontas","The Oasis / Discovery Island Trails","","Daily, multiple times","Standby only"),
+    mg("Chip 'n Dale","Palm Courtyard","The Oasis","Daily","Standby only"),
+    mg("Timon & Rafiki","Near Garden Gate Gifts","The Oasis","Daily, hourly — Timon :20, Rafiki :50","Standby only"),
+    mg("Donald & Daisy (safari attire)","Near Garden Gate Gifts","The Oasis","Daily","Standby only"),
+    mg("Goofy & Pluto","Past Drinkwallah","Asia","Daily, ~every 20 min, break ~1:00 PM","Standby only"),
+    mg("Bluey & Bingo","Conservation Station","via Wildlife Express Train","Daily · ~8:30 AM–3:45 PM — interactive play experience","Standby only")
+  ]
+};
+
+const lightningLane = {
+  mk: {
+    name:"Magic Kingdom",
+    tiers:[
+      {key:"choose1", label:"Multi Pass — choose 1", max:1, items:["Big Thunder Mountain","Jungle Cruise","Peter Pan's Flight","Space Mountain","Tiana's Bayou Adventure"]},
+      {key:"choose2", label:"Multi Pass — choose 2", max:2, items:["Barnstormer","Buzz Lightyear","Dumbo","Haunted Mansion","It's a Small World","Mad Tea Party","Magic Carpets of Aladdin","Winnie the Pooh","Mickey's PhilharMagic","Monsters Inc.","Pirates of the Caribbean","Tomorrowland Speedway","Under the Sea"]}
+    ],
+    single:["Seven Dwarfs Mine Train","TRON Lightcycle Run"]
+  },
+  epcot: {
+    name:"EPCOT",
+    tiers:[
+      {key:"choose1", label:"Multi Pass — choose 1", max:1, items:["Frozen Ever After","Remy's Ratatouille Adventure","Test Track"]},
+      {key:"choose2", label:"Multi Pass — choose 2", max:2, items:["Disney & Pixar Short Film Festival","Journey Into Imagination","Living with the Land","Mission: Space","The Seas with Nemo & Friends","Soarin'","Spaceship Earth","Turtle Talk with Crush"]}
+    ],
+    single:["Guardians of the Galaxy: Cosmic Rewind"]
+  },
+  ak: {
+    name:"Animal Kingdom",
+    tiers:[
+      {key:"choose3", label:"Multi Pass — choose 3", max:3, items:["Expedition Everest","Feathered Friends in Flight","Festival of the Lion King","Finding Nemo — The Musical","Kali River Rapids","Kilimanjaro Safaris","Na'vi River Journey","Zootopia: Better Zoogether!"]}
+    ],
+    single:["Avatar Flight of Passage"]
+  },
+  hs: {
+    name:"Hollywood Studios",
+    tiers:[
+      {key:"choose1", label:"Multi Pass — choose 1", max:1, items:["Mickey & Minnie's Runaway Railway","Millennium Falcon: Smugglers Run","Rock 'n' Roller Coaster Starring the Muppets","Slinky Dog Dash"]},
+      {key:"choose2", label:"Multi Pass — choose 2", max:2, items:["Alien Swirling Saucers","Beauty and the Beast Live on Stage","Disney Jr. Mickey Mouse Clubhouse Live!","For the First Time in Forever: A Frozen Sing-Along","Indiana Jones Epic Stunt Spectacular!","The Little Mermaid – A Musical Adventure","Star Tours – The Adventures Continue","Toy Story Mania!","The Twilight Zone Tower of Terror"]}
+    ],
+    single:["Star Wars: Rise of the Resistance"]
+  }
+};
+
+const parkLabels = {mk:"Magic Kingdom", epcot:"EPCOT", hs:"Hollywood Studios", ak:"Animal Kingdom"};
+
+/* ============================== STATE ============================== */
+const STORE_KEY = "wdwPlanner_v1";
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {checked:{}, ll:{}};
+}
+let state = loadState();
+if(!state.checked) state.checked = {};
+if(!state.ll) state.ll = {};
+
+function saveState(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+function slug(str){
+  return str.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+}
+
+function escapeAttr(str){
+  return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ============================== RENDER: item lists ============================== */
+function renderDiningItem(d){
+  const id = "dining-"+slug(d.name);
+  const checked = !!state.checked[id];
+  return `<div class="item ${checked?'checked':''}" data-id="${id}">
+    <input type="checkbox" ${checked?'checked':''} onchange="toggleCheck('${id}', this.checked)">
+    <div class="item-body">
+      <div class="item-name">${d.name}</div>
+      <div class="item-sub">${d.sub}</div>
+      <div class="item-loc">${d.loc}<span class="area">${d.area}</span></div>
+      <div class="item-meta">${d.chars}</div>
+      <div class="item-meta">${d.food}</div>
+      <div class="price">${d.price}</div>
+    </div>
+  </div>`;
+}
+
+function renderMgItem(park, m){
+  const id = "mg-"+park+"-"+slug(m.name);
+  const checked = !!state.checked[id];
+  const tagClass = m.special ? "special" : "standby";
+  return `<div class="item ${checked?'checked':''}" data-id="${id}">
+    <input type="checkbox" ${checked?'checked':''} onchange="toggleCheck('${id}', this.checked)">
+    <div class="item-body">
+      <div class="item-name">${m.name}</div>
+      <div class="item-loc">${m.loc}${m.area?`<span class="area">${m.area}</span>`:''}</div>
+      <div class="item-meta">${m.times}</div>
+      <span class="tag ${tagClass}">${m.ll}</span>
+    </div>
+  </div>`;
+}
+
+function toggleCheck(id, val){
+  if(val) state.checked[id] = true; else delete state.checked[id];
+  saveState();
+  const el = document.querySelector(`.item[data-id="${id}"]`);
+  if(el) el.classList.toggle('checked', val);
+  refreshStats();
+  if(document.getElementById('panel-summary').classList.contains('active')) renderSummary();
+}
+
+/* ============================== RENDER: Lightning Lane ============================== */
+function getLLSelection(parkKey, tierKey){
+  return (state.ll[parkKey] && state.ll[parkKey][tierKey]) || [];
+}
+function setLLSelection(parkKey, tierKey, arr){
+  if(!state.ll[parkKey]) state.ll[parkKey] = {};
+  state.ll[parkKey][tierKey] = arr;
+  saveState();
+}
+
+function llToggleFromEl(el){
+  llToggle(el.dataset.park, el.dataset.tier, el.dataset.item, parseInt(el.dataset.max, 10));
+}
+function llToggleSingleFromEl(el){
+  llToggleSingle(el.dataset.park, el.dataset.item);
+}
+
+function llToggle(parkKey, tierKey, item, max){
+  let sel = getLLSelection(parkKey, tierKey);
+  const idx = sel.indexOf(item);
+  if(idx >= 0){
+    sel.splice(idx,1);
+  } else {
+    if(max === 1){ sel = [item]; }
+    else if(sel.length < max){ sel.push(item); }
+    else { return; } // at limit, ignore
+  }
+  setLLSelection(parkKey, tierKey, sel);
+  renderLLPark(parkKey);
+  refreshStats();
+  if(document.getElementById('panel-summary').classList.contains('active')) renderSummary();
+}
+
+function llToggleSingle(parkKey, item){
+  let sel = getLLSelection(parkKey, 'single');
+  const idx = sel.indexOf(item);
+  if(idx >= 0) sel.splice(idx,1); else sel.push(item);
+  setLLSelection(parkKey, 'single', sel);
+  renderLLPark(parkKey);
+  refreshStats();
+  if(document.getElementById('panel-summary').classList.contains('active')) renderSummary();
+}
+
+function resetPark(parkKey){
+  state.ll[parkKey] = {};
+  saveState();
+  renderLLPark(parkKey);
+  refreshStats();
+}
+
+function renderLLPark(parkKey){
+  const park = lightningLane[parkKey];
+  const container = document.getElementById('ll-card-'+parkKey);
+  if(!container) return;
+
+  let html = `<p class="ll-park-title">${park.name}<button class="reset-btn" onclick="resetPark('${parkKey}')">Reset</button></p>`;
+
+  park.tiers.forEach(tier=>{
+    const sel = getLLSelection(parkKey, tier.key);
+    html += `<p class="ll-group-label">${tier.label}<span class="count">${sel.length}/${tier.max} selected</span></p>`;
+    html += `<div class="ll-chip-list">`;
+    tier.items.forEach(item=>{
+      const chosen = sel.indexOf(item) >= 0;
+      const disabled = !chosen && sel.length >= tier.max;
+      html += `<label class="ll-chip-label ${chosen?'chosen':''} ${disabled?'disabled':''}">
+        <input type="checkbox" ${chosen?'checked':''} ${disabled?'disabled':''}
+          data-park="${parkKey}" data-tier="${tier.key}" data-max="${tier.max}" data-item="${escapeAttr(item)}"
+          onchange="llToggleFromEl(this)">
+        ${item}
+      </label>`;
+    });
+    html += `</div>`;
+  });
+
+  const singleSel = getLLSelection(parkKey, 'single');
+  html += `<p class="ll-group-label">Single Pass (purchased individually)<span class="count">${singleSel.length} selected</span></p>`;
+  html += `<div class="ll-chip-list">`;
+  park.single.forEach(item=>{
+    const chosen = singleSel.indexOf(item) >= 0;
+    html += `<label class="ll-chip-label single ${chosen?'chosen':''}">
+      <input type="checkbox" ${chosen?'checked':''} data-park="${parkKey}" data-item="${escapeAttr(item)}" onchange="llToggleSingleFromEl(this)">
+      ${item}
+    </label>`;
+  });
+  html += `</div>`;
+
+  const allPicks = [];
+  park.tiers.forEach(tier=> getLLSelection(parkKey, tier.key).forEach(i=>allPicks.push(i)));
+  const singlePicks = getLLSelection(parkKey, 'single');
+  if(allPicks.length || singlePicks.length){
+    html += `<div class="ll-summary"><b>Your ${park.name} picks:</b> ${allPicks.concat(singlePicks.map(s=>s+' (Single Pass)')).join(', ')}</div>`;
+  } else {
+    html += `<div class="ll-summary empty">No selections yet.</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+/* ============================== TABS ============================== */
+const tabDefs = [
+  {id:"dining", label:"Character Dining"},
+  {id:"mk", label:"Magic Kingdom"},
+  {id:"epcot", label:"EPCOT"},
+  {id:"hs", label:"Hollywood Studios"},
+  {id:"ak", label:"Animal Kingdom"},
+  {id:"lightning", label:"Lightning Lane"},
+  {id:"summary", label:"My Plan Summary"}
+];
+
+function buildTabs(){
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = tabDefs.map(t=>`<button class="tab-btn" id="tabbtn-${t.id}" onclick="showTab('${t.id}')">${t.label}</button>`).join('');
+}
+
+function buildPanels(){
+  const panelsEl = document.getElementById('panels');
+  let html = '';
+
+  html += `<div class="tab-panel" id="panel-dining">
+    <div class="card">
+      <p class="card-title">All character dining locations</p>
+      <div class="item-grid">${diningData.map(renderDiningItem).join('')}</div>
+      <p class="card-note">Price ranges use Disney's own tiers: $35–$59.99 per adult, or $60+ per adult, covering the full meal and non-alcoholic beverages, before tax & gratuity.</p>
+    </div>
+  </div>`;
+
+  ["mk","epcot","hs","ak"].forEach(park=>{
+    html += `<div class="tab-panel" id="panel-${park}">
+      <div class="card">
+        <p class="card-title">${parkLabels[park]} meet & greets</p>
+        <div class="item-grid">${meetGreets[park].map(m=>renderMgItem(park,m)).join('')}</div>
+      </div>
+    </div>`;
+  });
+
+  html += `<div class="tab-panel" id="panel-lightning">
+    <div class="card-note" style="margin-bottom:12px;text-align:center;">Multi Pass lets you book a set number of attractions per tier, per day. Single Pass attractions are booked and paid for individually, on top of any Multi Pass purchase.</div>
+    <div class="ll-grid">
+      <div class="card" id="ll-card-mk"></div>
+      <div class="card" id="ll-card-epcot"></div>
+      <div class="card" id="ll-card-ak"></div>
+      <div class="card" id="ll-card-hs"></div>
+    </div>
+  </div>`;
+
+  html += `<div class="tab-panel" id="panel-summary">
+    <div class="card" id="summary-content"></div>
+  </div>`;
+
+  panelsEl.innerHTML = html;
+}
+
+function showTab(id){
+  tabDefs.forEach(t=>{
+    document.getElementById('panel-'+t.id).classList.toggle('active', t.id===id);
+    document.getElementById('tabbtn-'+t.id).classList.toggle('active', t.id===id);
+  });
+  if(id==='summary') renderSummary();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ============================== STATS ============================== */
+function refreshStats(){
+  const totalDining = diningData.length;
+  const checkedDining = diningData.filter(d=>state.checked["dining-"+slug(d.name)]).length;
+
+  let totalMg = 0, checkedMg = 0;
+  Object.keys(meetGreets).forEach(park=>{
+    meetGreets[park].forEach(m=>{
+      totalMg++;
+      if(state.checked["mg-"+park+"-"+slug(m.name)]) checkedMg++;
+    });
+  });
+
+  let llCount = 0;
+  Object.keys(lightningLane).forEach(park=>{
+    const p = lightningLane[park];
+    p.tiers.forEach(tier=> llCount += getLLSelection(park, tier.key).length);
+    llCount += getLLSelection(park, 'single').length;
+  });
+
+  const statBar = document.getElementById('statBar');
+  statBar.innerHTML = `
+    <div class="stat"><span class="num">${checkedDining}/${totalDining}</span><span class="lbl">Dining checked</span></div>
+    <div class="stat"><span class="num">${checkedMg}/${totalMg}</span><span class="lbl">Meet &amp; greets checked</span></div>
+    <div class="stat"><span class="num">${llCount}</span><span class="lbl">Lightning Lane picks</span></div>
+  `;
+}
+
+/* ============================== SUMMARY TAB ============================== */
+function renderSummary(){
+  const el = document.getElementById('summary-content');
+  let html = '';
+
+  const checkedDining = diningData.filter(d=>state.checked["dining-"+slug(d.name)]);
+  html += `<div class="summary-group"><h3>Character dining planned (${checkedDining.length})</h3>`;
+  html += checkedDining.length
+    ? `<ul class="summary-list">${checkedDining.map(d=>`<li><b>${d.name}</b> — ${d.loc}</li>`).join('')}</ul>`
+    : `<p class="summary-empty">Nothing checked off yet on the Character Dining tab.</p>`;
+  html += `</div>`;
+
+  ["mk","epcot","hs","ak"].forEach(park=>{
+    const checkedList = meetGreets[park].filter(m=>state.checked["mg-"+park+"-"+slug(m.name)]);
+    html += `<div class="summary-group"><h3>${parkLabels[park]} meet & greets planned (${checkedList.length})</h3>`;
+    html += checkedList.length
+      ? `<ul class="summary-list">${checkedList.map(m=>`<li><b>${m.name}</b> — ${m.loc}</li>`).join('')}</ul>`
+      : `<p class="summary-empty">Nothing checked off yet on the ${parkLabels[park]} tab.</p>`;
+    html += `</div>`;
+  });
+
+  html += `<div class="summary-group"><h3>Lightning Lane picks</h3>`;
+  let anyLL = false;
+  let llHtml = '<ul class="summary-list">';
+  Object.keys(lightningLane).forEach(park=>{
+    const p = lightningLane[park];
+    const picks = [];
+    p.tiers.forEach(tier=> getLLSelection(park, tier.key).forEach(i=>picks.push(i)));
+    const singlePicks = getLLSelection(park, 'single');
+    if(picks.length || singlePicks.length){
+      anyLL = true;
+      const all = picks.concat(singlePicks.map(s=>s+' (Single Pass)'));
+      llHtml += `<li><b>${p.name}</b> — ${all.join(', ')}</li>`;
+    }
+  });
+  llHtml += '</ul>';
+  html += anyLL ? llHtml : `<p class="summary-empty">No Lightning Lane selections yet — build your picks on the Lightning Lane tab.</p>`;
+  html += `</div>`;
+
+  el.innerHTML = html;
+}
+
+/* ============================== RESET ALL ============================== */
+function resetEverything(){
+  if(!confirm("Clear every checkbox and Lightning Lane selection? This can't be undone.")) return;
+  state = {checked:{}, ll:{}};
+  saveState();
+  buildPanels();
+  Object.keys(lightningLane).forEach(renderLLPark);
+  refreshStats();
+  showTab('dining');
+}
+
+/* ============================== INIT ============================== */
+function init(){
+  buildTabs();
+  buildPanels();
+  Object.keys(lightningLane).forEach(renderLLPark);
+  refreshStats();
+  showTab('dining');
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WDW Character &amp; Lightning Lane Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#efe7db; --card:#ffffff; --pink:#cf8a9c; --pink-light:#f8dde3;
+    --maroon:#7d3446; --maroon2:#8a3b4b; --text:#4a3f3d; --muted:#9c8f8a;
+    --muted2:#a6968f; --green:#5c7a63; --gold:#f3e0c9; --gold-text:#8a5a2b; --border:#f3e6e2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:'Poppins',sans-serif;color:var(--text);background:var(--cream);min-height:100vh;}
+  .wrap{max-width:820px;margin:0 auto;padding:40px 22px 60px 22px;}
+  .page-card{background:var(--card);border-radius:22px;padding:36px 34px;box-shadow:0 10px 30px rgba(120,70,80,0.10);}
+  .badge{display:inline-block;background:var(--pink);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:5px 15px;border-radius:999px;margin-bottom:14px;}
+  h1{font-size:32px;font-weight:800;color:var(--maroon);margin:0 0 10px 0;text-align:center;line-height:1.2;}
+  .subtitle{font-size:14px;color:var(--muted);margin:0 0 28px 0;font-weight:500;text-align:center;}
+  .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
+  @media(max-width:560px){.feature-grid{grid-template-columns:1fr;}}
+  .feature{background:#fffdfb;border:1px solid var(--border);border-radius:14px;padding:14px 16px;}
+  .feature b{color:var(--maroon2);display:block;font-size:13px;margin-bottom:3px;}
+  .feature span{font-size:12px;color:var(--muted2);line-height:1.5;}
+  .buy-box{background:var(--pink-light);border-radius:18px;padding:26px 24px;text-align:center;margin-bottom:22px;}
+  .price{font-size:34px;font-weight:800;color:var(--maroon);}
+  .price small{font-size:14px;font-weight:600;color:var(--muted2);}
+  .buy-btn{
+    margin-top:14px;background:var(--maroon);color:#fff;border:none;border-radius:999px;
+    padding:14px 34px;font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;
+    cursor:pointer;transition:opacity .15s ease;
+  }
+  .buy-btn:hover{opacity:.9;}
+  .buy-btn:disabled{opacity:.6;cursor:default;}
+  .buy-note{font-size:11px;color:var(--muted2);margin-top:10px;}
+  .error{color:#b23a4a;font-size:12px;margin-top:10px;display:none;}
+  .footer{text-align:center;font-size:9.5px;color:var(--muted2);font-style:italic;margin-top:8px;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="page-card">
+    <div style="text-align:center;">
+      <span class="badge">WDW PLANNER</span>
+    </div>
+    <h1>The Interactive WDW Character &amp; Lightning Lane Planner</h1>
+    <p class="subtitle">Every character dining table, every meet &amp; greet, and a Multi Pass / Single Pass builder for all 4 parks &mdash; in one checklist you keep coming back to.</p>
+
+    <div class="feature-grid">
+      <div class="feature"><b>Check off as you plan</b><span>Dining and meet &amp; greets across all four parks, with checkboxes that save automatically.</span></div>
+      <div class="feature"><b>Lightning Lane builder</b><span>Pick your Multi Pass choices per tier with the same limits Disney enforces, plus Single Pass add-ons.</span></div>
+      <div class="feature"><b>One summary view</b><span>Everything you've picked, rolled up on one page &mdash; ready to print before your trip.</span></div>
+      <div class="feature"><b>Works offline</b><span>A single file that opens in any browser. No account, no app store, no internet required after download.</span></div>
+    </div>
+
+    <div class="buy-box">
+      <div class="price">$9 <small>one-time</small></div>
+      <div>
+        <button class="buy-btn" id="buyBtn">Buy &amp; Download</button>
+      </div>
+      <p class="buy-note">Secure checkout via Stripe. Instant download after payment.</p>
+      <p class="error" id="errorMsg">Something went wrong &mdash; please try again in a moment.</p>
+    </div>
+
+    <p class="footer">Unofficial fan-made planning tool &middot; not affiliated with or endorsed by Disney &middot; character locations, hours &amp; Lightning Lane offerings change frequently and are provided as a planning aid only.</p>
+  </div>
+</div>
+
+<script>
+  document.getElementById('buyBtn').addEventListener('click', async function(){
+    const btn = this;
+    const errorMsg = document.getElementById('errorMsg');
+    errorMsg.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Redirecting to checkout…';
+    try{
+      const res = await fetch('/api/create-checkout-session', { method: 'POST' });
+      const data = await res.json();
+      if(data.url){
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.error || 'No checkout URL returned.');
+      }
+    } catch(err){
+      console.error(err);
+      errorMsg.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Buy & Download';
+    }
+  });
+</script>
+</body>
+</html>

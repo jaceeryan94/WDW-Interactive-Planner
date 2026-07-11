@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout canceled</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#efe7db; --card:#ffffff; --pink:#cf8a9c; --maroon:#7d3446; --maroon2:#8a3b4b;
+    --text:#4a3f3d; --muted:#9c8f8a; --muted2:#a6968f;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{font-family:'Poppins',sans-serif;color:var(--text);background:var(--cream);display:flex;align-items:center;justify-content:center;min-height:100vh;}
+  .wrap{max-width:460px;margin:0 auto;padding:22px;width:100%;}
+  .page-card{background:var(--card);border-radius:22px;padding:34px 30px;box-shadow:0 10px 30px rgba(120,70,80,0.10);text-align:center;}
+  .badge{display:inline-block;background:var(--pink);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:5px 15px;border-radius:999px;margin-bottom:14px;}
+  h1{font-size:22px;font-weight:800;color:var(--maroon);margin:0 0 10px 0;}
+  p{font-size:13px;color:var(--muted);margin:0 0 22px 0;line-height:1.6;}
+  a.btn{
+    display:inline-block;background:var(--maroon);color:#fff;border-radius:999px;
+    padding:12px 28px;font-size:14px;font-weight:700;text-decoration:none;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="page-card">
+    <span class="badge">CHECKOUT CANCELED</span>
+    <h1>No charge was made</h1>
+    <p>You canceled before completing payment &mdash; nothing was charged to your card. Whenever you're ready, you can start again below.</p>
+    <a class="btn" href="/">Back to the store</a>
+  </div>
+</div>
+</body>
+</html>
